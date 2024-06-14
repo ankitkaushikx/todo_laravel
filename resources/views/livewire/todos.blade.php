@@ -38,7 +38,7 @@ use function Livewire\Volt\{state , with};
   @foreach ($todos as $todo )
   <div class="p-2 border rounded flex justify-between">
     {{$todo->task}}
-    <button wire:click="delete{{$todo->id}}">Delete</button>
+    <button wire:click="delete({{$todo->id}})" class="bg-red-600 p-1 rounded">Delete</button>
   </div>
   @endforeach
 </div>
