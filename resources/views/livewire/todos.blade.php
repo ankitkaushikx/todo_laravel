@@ -15,28 +15,30 @@ use function Livewire\Volt\{state , with};
    ]);
 
    //Function to handle form submission
-   $add = function(){
-
-
-   \App\Models\Todo::create([
-    'user_id'=> auth()->id(),
-    'task'=> $this->task
+  $add = function(){
+  auth()->user()->todos()->create([
+     'task'=> $this->task
    ]);
-
    $this->task = '';
+   };
+
+///Function To delte
+  $delete = function(\App\Models\Todo $todo){
+  $todo->delete();
    }
 ?>
 
-<div>
-<form wire:submit="add">
+<div class="">
+<form wire:submit="add" class="py-4">
   <input type="text" wire:model='task'>
   <button class="btn " type="submit">Add</button>
 </form>
 
-<div>
+<div class="  bg-slate-900 p-4 text-white">
   @foreach ($todos as $todo )
-  <div class="">
+  <div class="p-2 border rounded flex justify-between">
     {{$todo->task}}
+    <button wire:click="delete{{$todo->id}}">Delete</button>
   </div>
   @endforeach
 </div>
