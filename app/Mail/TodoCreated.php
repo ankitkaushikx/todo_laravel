@@ -5,49 +5,39 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
+use Illuminate\Mail\Mailables\Address;
+
 use Illuminate\Queue\SerializesModels;
+use App\Models\Todo;
 
 class TodoCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $todo;
+
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(Todo $todo)
     {
-        //
+        $this->todo = $todo;
     }
 
     /**
-     * Get the message envelope.
-     */
-    public function envelope(): Envelope
-    {
-        return new Envelope(
-            subject: 'Todo Created',
-        );
-    }
-
-    /**
-     * Get the message content definition.
-     */
-    public function content(): Content
-    {
-        return new Content(
-            view: 'view.name',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
+     * Build the message.
      *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     * @return $this
      */
-    public function attachments(): array
+    public function build()
     {
-        return [];
+        return $this
+            ->subject('Todo Created')
+            ->from(new Address('ankitkaushik@gmail.com', 'Ankit'))
+            ->replyTo(new Address('ankitkaushikmail@gmail.com', 'Ankit Kaushik'))
+            ->view('emails.todo-created')
+            ->with([
+                'content' => 'Testing ' . $this->todo->task
+            ]);
     }
 }

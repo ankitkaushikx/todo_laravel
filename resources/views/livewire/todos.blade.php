@@ -1,9 +1,11 @@
 <?php
 
+use App\Mail\TodoCreated;
 
 use Livewire\Component;
 use App\Models\Todo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 use function Livewire\Volt\{state , with};
 //State 
@@ -17,13 +19,13 @@ use function Livewire\Volt\{state , with};
    //Function to handle form submission
   $add = function(){
 
-  auth()->user()->todos()->create([
+  $todo = auth()->user()->todos()->create([
      'task'=> $this->task
    ]);
 
 
    //Send Mail to USer
-   Mail::to(auth()->user())->queue(new TodoCreated($todo));
+   Mail::to(auth()->user())->send(new TodoCreated($todo));
 
 
    $this->task = '';
