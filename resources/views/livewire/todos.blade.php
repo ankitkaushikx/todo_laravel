@@ -43,12 +43,22 @@ use function Livewire\Volt\{state , with};
   <button class="btn " type="submit">Add</button>
 </form>
 
-<div class="  bg-slate-900 p-4 text-white">
-  @foreach ($todos as $todo )
-  <div class="p-2 border rounded flex justify-between">
-    {{$todo->task}}
-    <button wire:click="delete({{$todo->id}})" class="bg-red-600 p-1 rounded">Delete</button>
-  </div>
+<div>
+  @foreach ($todos as $todo)
+    <div class="p-4 border rounded flex justify-between 
+      @if ($todo->stage == 'pending')
+        bg-red-500
+      @elseif ($todo->stage == 'started')
+        bg-yellow-500
+      @elseif ($todo->stage == 'working')
+        bg-blue-500
+         @elseif ($todo->stage == 'completed')
+        bg-green-500
+      @endif
+    ">
+      {{$todo->task}}
+      <button wire:click="delete({{$todo->id}})" class="bg-red-600 p-1 rounded">Delete</button>
+    </div>
   @endforeach
 </div>
 </div>
