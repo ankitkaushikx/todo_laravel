@@ -13,7 +13,7 @@ use function Livewire\Volt\{state , with};
 
 //to pass $todos list 
    with([
-    'todos'=> fn()=>  auth()->user()->todos
+    'todos'=> fn()=>  auth()->user()->todos()->orderBy('created_at', 'desc')->get()
    ]);
 
    //Function to handle form submission

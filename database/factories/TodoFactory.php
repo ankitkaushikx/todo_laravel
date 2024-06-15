@@ -23,7 +23,7 @@ class TodoFactory extends Factory
     {
         return [
             'task' => $this->faker->sentence,
-            'user_id'=> 3
+            'user_id'=> 4
         ];
     }
 }
