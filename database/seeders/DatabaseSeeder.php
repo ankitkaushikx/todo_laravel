@@ -20,6 +20,6 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // Create 200 todos using TodoFactory
-        Todo::factory()->count(200)->create();
+        Todo::factory()->count(2000)->create();
     }
 }

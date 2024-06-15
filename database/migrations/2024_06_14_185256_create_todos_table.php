@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignIdFor(\App\Models\User::class);
             $table->text('task');
             $table->timestamps();
-            $table->string('stage',10);
+            $table->string('stage', 10)->default('pending');
         });
     }
 
