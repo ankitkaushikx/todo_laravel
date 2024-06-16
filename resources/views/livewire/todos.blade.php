@@ -13,9 +13,15 @@ use function Livewire\Volt\{state , with};
 
 //to pass $todos list 
    with([
-    'todos'=> fn()=>  auth()->user()->todos()->orderBy('created_at', 'desc')->get()
+    'todos'=> fn()=>  auth()->user()->todos()->orderBy('created_at', 'desc')->get(),
+
    ]);
 
+
+ 
+
+   // Count By "Stage"
+ 
    //Function to handle form submission
   $add = function(){
 
@@ -25,7 +31,7 @@ use function Livewire\Volt\{state , with};
 
 
    //Send Mail to USer
-   Mail::to(auth()->user())->send(new TodoCreated($todo));
+  //  Mail::to(auth()->user())->send(new TodoCreated($todo));
 
 
    $this->task = '';
@@ -34,49 +40,22 @@ use function Livewire\Volt\{state , with};
 ///Function To delte
   $delete = function(\App\Models\Todo $todo){
   $todo->delete();
-   }
+   };
 
-   //Function to Count by Stage;
-   
+ 
+
 ?>
 
 <div class="">
-  <form wire:submit.prevent="add" class="py-4 flex">
-    <input type="text" wire:model.lazy="task" class="flex-grow p-2 border rounded-l">
-    <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r">Add</button>
-  </form>
+    <form wire:submit.prevent="add" class="py-4 flex">
+        <input type="text" wire:model.lazy="task" class="flex-grow p-2 border rounded-l">
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-r">Add</button>
+    </form>
 
   <div>
     <div class="py-2 bg-slate-900 text-white text-center">
-    <div class="flex flex-wrap justify-center items-center">
-        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
-            <div class="text-white bg-white bg-opacity-10 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
-                Total: {{ $todos->count() }}
-            </div>
-        </div>
-        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
-            <div class="text-white bg-red-500 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
-                Pending: {{ $todos->where('stage', 'pending')->count() }}
-            </div>
-        </div>
-        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
-            <div class="text-white bg-blue-500 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
-                Working: {{ $todos->where('stage', 'working')->count() }}
-            </div>
-        </div>
-        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
-            <div class="text-white bg-yellow-500 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
-                Started: {{ $todos->where('stage', 'started')->count() }}
-            </div>
-        </div>
-        <div class="w-full md:w-auto mb-2 md:mb-0">
-            <div class="text-white bg-green-500 px-4 py-2 rounded-lg md:inline-block">
-                Completed: {{ $todos->where('stage', 'completed')->count() }}
-            </div>
-        </div>
+      Total: {{ $todos->count() }} <!-- Display total count of todos -->
     </div>
-</div>
-
     @foreach ($todos as $todo)
       <div class="p-4 border rounded flex justify-between 
         @if ($todo->stage == 'pending')
@@ -95,6 +74,3 @@ use function Livewire\Volt\{state , with};
     @endforeach
   </div>
 </div>
-
-
-
