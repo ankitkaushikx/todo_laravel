@@ -54,8 +54,35 @@ use function Livewire\Volt\{state , with};
 
   <div>
     <div class="py-2 bg-slate-900 text-white text-center">
-      Total: {{ $todos->count() }} <!-- Display total count of todos -->
+    <div class="flex flex-wrap justify-center items-center">
+        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
+            <div class="text-white bg-white bg-opacity-10 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
+                Total: {{ $todos->count() }}
+            </div>
+        </div>
+        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
+            <div class="text-white bg-red-500 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
+                Pending: {{ $todos->where('stage', 'pending')->count() }}
+            </div>
+        </div>
+        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
+            <div class="text-white bg-blue-500 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
+                Working: {{ $todos->where('stage', 'working')->count() }}
+            </div>
+        </div>
+        <div class="w-full md:w-auto mb-2 md:mb-0 md:mr-4">
+            <div class="text-white bg-yellow-500 px-4 py-2 rounded-lg mb-2 md:mb-0 md:inline-block">
+                Started: {{ $todos->where('stage', 'started')->count() }}
+            </div>
+        </div>
+        <div class="w-full md:w-auto mb-2 md:mb-0">
+            <div class="text-white bg-green-500 px-4 py-2 rounded-lg md:inline-block">
+                Completed: {{ $todos->where('stage', 'completed')->count() }}
+            </div>
+        </div>
     </div>
+</div>
+
     @foreach ($todos as $todo)
       <div class="p-4 border rounded flex justify-between 
         @if ($todo->stage == 'pending')
